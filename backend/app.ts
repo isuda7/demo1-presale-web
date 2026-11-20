@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { adminRoutes } from './routes/admin.js';
 import { publicRoutes } from './routes/public.js';
+import { contentAdminRoutes, contentPublicRoutes } from './routes/content.js';
 import { dbTarget, getDb } from './db/client.js';
 
 /**
@@ -12,7 +13,8 @@ export const app = new Hono().basePath('/api');
 
 app.use('*', async (c, next) => {
   await next();
-  c.header('Cache-Control', 'no-store');
+  // 라우트가 직접 지정한 캐시 정책(예: 이미지)은 유지
+  if (!c.res.headers.has('Cache-Control')) c.header('Cache-Control', 'no-store');
   c.header('X-Content-Type-Options', 'nosniff');
 });
 
@@ -27,7 +29,9 @@ app.get('/health', async (c) => {
 });
 
 app.route('/', publicRoutes);
+app.route('/', contentPublicRoutes);
 app.route('/admin', adminRoutes);
+app.route('/admin', contentAdminRoutes);
 
 app.notFound((c) => c.json({ error: 'not_found' }, 404));
 

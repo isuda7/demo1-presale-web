@@ -10,6 +10,12 @@ import { sign, verify } from 'hono/jwt';
  * - 토큰은 HttpOnly 쿠키로만 전달
  */
 export const ADMIN_COOKIE = 'admin_token';
+/**
+ * 관리자 표시 쿠키 (비밀값 아님, 권한 없음).
+ * 사이트 화면이 "편집기 코드를 받아 올지"만 판단하는 데 쓴다. 실제 권한은 admin_token 으로 서버가 확인.
+ * 방문자에게는 이 쿠키가 없으므로 편집기 코드가 로드되지 않는다.
+ */
+export const ADMIN_HINT_COOKIE = 'admin_ui';
 const COOKIE_PATH = '/api/admin';
 const MIN_SECRET_LENGTH = 32;
 
@@ -57,10 +63,17 @@ export function setAdminCookie(c: Context, token: string, hours: number): void {
     path: COOKIE_PATH,
     maxAge: hours * 3600,
   });
+  setCookie(c, ADMIN_HINT_COOKIE, '1', {
+    secure: isHttps(c),
+    sameSite: 'Strict',
+    path: '/',
+    maxAge: hours * 3600,
+  });
 }
 
 export function clearAdminCookie(c: Context): void {
   deleteCookie(c, ADMIN_COOKIE, { path: COOKIE_PATH, secure: isHttps(c) });
+  deleteCookie(c, ADMIN_HINT_COOKIE, { path: '/', secure: isHttps(c) });
 }
 
 export const requireAdmin: MiddlewareHandler = async (c, next) => {

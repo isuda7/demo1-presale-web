@@ -13,6 +13,24 @@ export const schemaStatements = [
   )`,
   `CREATE INDEX IF NOT EXISTS idx_applications_created_at ON applications (created_at)`,
   `CREATE INDEX IF NOT EXISTS idx_applications_status ON applications (status)`,
+  // 화면 편집 내용 (페이지·요소 키 단위)
+  `CREATE TABLE IF NOT EXISTS content_overrides (
+    page TEXT NOT NULL,
+    key TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    orig TEXT NOT NULL,
+    value TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY (page, key)
+  )`,
+  // 화면 편집에서 올린 이미지
+  `CREATE TABLE IF NOT EXISTS media (
+    id TEXT PRIMARY KEY,
+    mime TEXT NOT NULL,
+    size INTEGER NOT NULL,
+    data BLOB NOT NULL,
+    created_at TEXT NOT NULL
+  )`,
 ];
 
 let ready: Promise<void> | null = null;

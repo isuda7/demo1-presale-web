@@ -12,6 +12,9 @@ export function pageHtmlFile(path: string): string {
   return resolve(root, `.${path}`, 'index.html');
 }
 
+// 로컬 API 주소 (기본 8787, API_PORT 로 변경 가능)
+const apiTarget = `http://localhost:${process.env.API_PORT ?? 8787}`;
+
 // 활성화된 페이지만 빌드 입력으로 사용 (Vite 멀티페이지)
 const input = Object.fromEntries(
   enabledPages(config).map((p) => {
@@ -41,13 +44,13 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:8787',
+      '/api': apiTarget,
     },
   },
   preview: {
     port: 4173,
     proxy: {
-      '/api': 'http://localhost:8787',
+      '/api': apiTarget,
     },
   },
 });

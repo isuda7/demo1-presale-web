@@ -22,6 +22,13 @@ function pageIdOf(html: string): string | null {
   return /<html[^>]*\sdata-page="([^"]+)"/.exec(html)?.[1] ?? null;
 }
 
+/**
+ * 저장된 화면 편집 내용이 적용되기 전 원래 문구가 잠깐 보이는 것을 막는다.
+ * cms.js 가 적용을 마치면 해제하고, 응답이 늦어도 1.2초 뒤에는 무조건 보이게 한다.
+ */
+const CMS_PENDING = `<style>.cms-pending main{visibility:hidden}</style>
+    <script>document.documentElement.classList.add('cms-pending');setTimeout(function(){document.documentElement.classList.remove('cms-pending')},1200)</script>`;
+
 function renderHead(c: SiteConfig, id: string): string {
   const page = c.pages[id];
   const title = id === 'home' ? c.site.name : `${page?.title ?? ''} | ${c.site.name}`;
@@ -33,6 +40,7 @@ function renderHead(c: SiteConfig, id: string): string {
   ];
   if (c.site.description) lines.push(`<meta name="description" content="${esc(c.site.description)}" />`);
   if (page?.noindex) lines.push('<meta name="robots" content="noindex, nofollow" />');
+  if (page?.layout !== 'admin') lines.push(CMS_PENDING);
   return lines.join('\n    ');
 }
 

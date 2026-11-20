@@ -33,6 +33,12 @@ function consentBlock() {
   return wrap;
 }
 
+function requiredMark() {
+  const wrap = el('span', { class: 'req' });
+  wrap.append(el('span', { 'aria-hidden': 'true' }, '*'), el('span', { class: 'sr-only' }, '(필수)'));
+  return wrap;
+}
+
 function renderFields() {
   for (const f of applyFields) {
     const id = `f-${f.name}`;
@@ -41,12 +47,15 @@ function renderFields() {
 
     if (f.type === 'checkbox') {
       fieldsBox.append(consentBlock());
-      const label = el('label');
-      label.append(el('input', { ...common, type: 'checkbox', value: 'true' }), ` ${f.label}`);
-      if (f.required) label.append(' (필수)');
+      row.classList.add('form-row--check');
+      const label = el('label', { class: 'check' });
+      label.append(el('input', { ...common, type: 'checkbox', value: 'true' }), el('span', {}, f.label));
+      if (f.required) label.append(requiredMark());
       row.append(label);
     } else {
-      row.append(el('label', { for: id }, `${f.label}${f.required ? ' (필수)' : ''}`));
+      const label = el('label', { for: id }, f.label);
+      if (f.required) label.append(requiredMark());
+      row.append(label);
       const attrs = {
         ...common,
         maxlength: f.maxLength,
@@ -93,6 +102,12 @@ async function init() {
   else form.hidden = false;
 }
 
+function showResult(message, isError) {
+  resultBox.hidden = false;
+  resultBox.textContent = message;
+  resultBox.classList.toggle('apply-state--error', isError);
+}
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   resultBox.hidden = true;
@@ -109,19 +124,16 @@ form.addEventListener('submit', async (e) => {
     if (res.ok) {
       form.reset();
       form.hidden = true;
-      resultBox.hidden = false;
-      resultBox.textContent = res.data?.message || config.apply.doneMessage;
+      showResult(res.data?.message || config.apply.doneMessage, false);
     } else if (res.status === 403 && res.data?.error === 'closed') {
       showClosed(res.data.message);
     } else if (res.status === 422) {
       showErrors(res.data?.errors);
     } else {
-      resultBox.hidden = false;
-      resultBox.textContent = '일시적인 오류로 등록하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+      showResult('일시적인 오류로 등록하지 못했습니다. 잠시 후 다시 시도해 주세요.', true);
     }
   } catch {
-    resultBox.hidden = false;
-    resultBox.textContent = '네트워크 오류로 등록하지 못했습니다.';
+    showResult('네트워크 오류로 등록하지 못했습니다.', true);
   } finally {
     submitBtn.disabled = false;
   }
