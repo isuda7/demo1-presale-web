@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko" data-page="apply">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- @layout:head -->
+    <link rel="stylesheet" href="/src/styles/base.css" />
+  </head>
+  <body>
+    <!-- @layout:header -->
+    <main id="main" class="page page--apply">
+      <!-- @layout:title -->
+      <section class="page-section" data-slot="apply-intro"></section>
+
+      <section class="page-section">
+        <!-- 마감 시 안내 -->
+        <p id="apply-closed" class="form-message" role="status" hidden></p>
+        <!-- 접수 완료/오류 안내 -->
+        <p id="apply-result" class="form-message" role="status" hidden></p>
+
+        <form id="apply-form" novalidate hidden>
+          <div id="apply-fields"></div>
+          <button type="submit">등록하기</button>
+        </form>
+        <noscript>관심고객 등록은 자바스크립트를 사용해야 합니다.</noscript>
+      </section>
+    </main>
+    <!-- @layout:footer -->
+    <script type="module" src="/src/js/common.js"></script>
+    <script type="module" src="/src/js/apply.js"></script>
+  </body>
+</html>

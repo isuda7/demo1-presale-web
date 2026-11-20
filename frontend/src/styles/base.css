@@ -1,0 +1,228 @@
+/*
+ * 구축 초안용 기본 레이아웃 스타일 — 구조 확인용 최소 스타일만 둔다.
+ * (디자인·유형 스타일은 이후 단계에서 별도 파일로 추가)
+ */
+:root {
+  --content-width: 1200px;
+  --gutter: 16px;
+  --header-height: 64px;
+  --color-text: #222;
+  --color-muted: #777;
+  --color-line: #ddd;
+  --color-bg: #fff;
+  --color-placeholder: #f5f5f5;
+  --color-error: #c00;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+.skip-link:focus {
+  left: var(--gutter);
+  top: var(--gutter);
+  z-index: 100;
+  background: #fff;
+  padding: 8px;
+}
+
+/* 헤더 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-bg);
+}
+.site-header__inner {
+  max-width: var(--content-width);
+  min-height: var(--header-height);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.site-logo {
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+.site-nav a[aria-current='page'] {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.nav-toggle {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .nav-toggle {
+    display: block;
+  }
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--gutter);
+  }
+  .site-nav.is-open {
+    display: block;
+  }
+  .site-nav ul {
+    flex-direction: column;
+  }
+}
+
+/* 본문 */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 48px;
+}
+.page-title {
+  padding: 40px 0 24px;
+  border-bottom: 1px solid var(--color-line);
+}
+.page-title h1 {
+  margin: 0;
+}
+.page-section {
+  padding: 32px 0;
+}
+
+/* 비어 있는 콘텐츠 자리 표시 (구축 초안 확인용) */
+[data-slot]:empty {
+  min-height: 160px;
+  background: var(--color-placeholder);
+  border: 1px dashed var(--color-line);
+}
+[data-slot]:empty::before {
+  content: '콘텐츠 영역: ' attr(data-slot);
+  display: block;
+  padding: 16px;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+/* 푸터 */
+.site-footer {
+  border-top: 1px solid var(--color-line);
+  font-size: 14px;
+  color: var(--color-muted);
+}
+.site-footer__inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 24px var(--gutter);
+}
+.footer-links {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  gap: 16px;
+}
+.footer-links a {
+  color: inherit;
+}
+
+/* 폼 공통 */
+.form-row {
+  margin-bottom: 16px;
+}
+.form-row label {
+  display: block;
+  margin-bottom: 4px;
+}
+.form-row input[type='text'],
+.form-row input[type='tel'],
+.form-row input[type='password'],
+.form-row input[type='date'],
+.form-row input[type='search'],
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  max-width: 480px;
+  padding: 8px;
+  font: inherit;
+}
+.form-row textarea {
+  min-height: 120px;
+}
+.form-error {
+  color: var(--color-error);
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+.form-message {
+  padding: 12px;
+  border: 1px solid var(--color-line);
+}
+.consent-box {
+  max-width: 480px;
+  max-height: 200px;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  font-size: 14px;
+  white-space: pre-line;
+}
+.draft-note {
+  color: var(--color-error);
+}
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+[hidden] {
+  display: none !important;
+}

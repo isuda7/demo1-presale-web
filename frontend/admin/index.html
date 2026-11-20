@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko" data-page="admin">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- @layout:head -->
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <style>
+      .admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      .admin-table th, .admin-table td { border: 1px solid var(--color-line); padding: 6px 8px; text-align: left; vertical-align: top; }
+      .admin-table td:nth-child(5) { white-space: pre-wrap; max-width: 320px; }
+      .admin-toolbar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-end; margin-bottom: 16px; }
+      .admin-toolbar .form-row { margin: 0; }
+      .table-wrap { overflow-x: auto; }
+      #list-pager { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 16px; }
+      #list-pager [aria-current='page'] { font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <main id="main" class="page page--admin">
+      <h1>신청 관리</h1>
+
+      <!-- 로그인 -->
+      <section id="admin-login" hidden>
+        <form id="login-form">
+          <div class="form-row">
+            <label for="admin-password">비밀번호</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button type="submit">로그인</button>
+          <p id="login-error" class="form-error" role="alert"></p>
+        </form>
+      </section>
+
+      <!-- 신청 목록 -->
+      <section id="admin-list" hidden>
+        <form id="filter-form" class="admin-toolbar" role="search">
+          <div class="form-row">
+            <label for="filter-q">검색(성함·연락처·문의)</label>
+            <input id="filter-q" name="q" type="search" maxlength="100" />
+          </div>
+          <div class="form-row">
+            <label for="filter-status">상태</label>
+            <select id="filter-status" name="status"></select>
+          </div>
+          <div class="form-row">
+            <label for="filter-from">신청일 시작</label>
+            <input id="filter-from" name="from" type="date" />
+          </div>
+          <div class="form-row">
+            <label for="filter-to">신청일 종료</label>
+            <input id="filter-to" name="to" type="date" />
+          </div>
+          <button type="submit">조회</button>
+          <button type="reset">초기화</button>
+          <a id="csv-link" href="/api/admin/applications.csv">CSV 내려받기</a>
+          <button id="logout-btn" type="button">로그아웃</button>
+        </form>
+
+        <p id="list-summary" role="status"></p>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th scope="col">번호</th>
+                <th scope="col">신청일시</th>
+                <th scope="col">성함</th>
+                <th scope="col">연락처</th>
+                <th scope="col">문의사항</th>
+                <th scope="col">상태</th>
+                <th scope="col">관리</th>
+              </tr>
+            </thead>
+            <tbody id="list-body"></tbody>
+          </table>
+        </div>
+        <nav id="list-pager" aria-label="페이지"></nav>
+      </section>
+    </main>
+    <script type="module" src="/src/js/admin.js"></script>
+  </body>
+</html>

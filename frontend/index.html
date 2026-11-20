@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko" data-page="home">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- @layout:head -->
+    <link rel="stylesheet" href="/src/styles/base.css" />
+  </head>
+  <body>
+    <!-- @layout:header -->
+    <main id="main" class="page page--home">
+      <!-- 메인(INTRO) -->
+      <section class="page-section" data-slot="hero"></section>
+      <section class="page-section" data-slot="summary"></section>
+      <section class="page-section">
+        <a href="/apply/">관심고객등록</a>
+      </section>
+    </main>
+    <!-- @layout:footer -->
+    <script type="module" src="/src/js/common.js"></script>
+  </body>
+</html>
