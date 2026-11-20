@@ -109,6 +109,22 @@ function renderFooter(c: SiteConfig, id: string): string {
   </footer>`;
 }
 
+/** 관리자 레이아웃: 사이트 메뉴 없이 로고·구분 표기·사이트 바로가기만 */
+function renderAdminHeader(c: SiteConfig): string {
+  return `<a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="admin-header">
+    <div class="admin-header__inner">
+      <a class="site-logo" href="/admin/" aria-label="${esc(c.site.name)} 관리자">${renderLogo(c)}</a>
+      <span class="admin-header__label">ADMIN</span>
+      <a class="admin-header__site" href="/" target="_blank" rel="noopener">사이트 보기</a>
+    </div>
+  </header>`;
+}
+
+function renderAdminFooter(c: SiteConfig): string {
+  return `<footer class="admin-footer"><p>&copy; ${esc(c.site.name)} · 관리자 전용 화면</p></footer>`;
+}
+
 export function layoutPlugin(c: SiteConfig): Plugin {
   return {
     name: 'site-layout',
@@ -122,9 +138,9 @@ export function layoutPlugin(c: SiteConfig): Plugin {
         const isAdmin = c.pages[id].layout === 'admin';
         return html
           .replace('<!-- @layout:head -->', renderHead(c, id))
-          .replace('<!-- @layout:header -->', isAdmin ? '' : renderHeader(c, id))
+          .replace('<!-- @layout:header -->', isAdmin ? renderAdminHeader(c) : renderHeader(c, id))
           .replace('<!-- @layout:title -->', isAdmin ? '' : renderTitle(c, id))
-          .replace('<!-- @layout:footer -->', isAdmin ? '' : renderFooter(c, id))
+          .replace('<!-- @layout:footer -->', isAdmin ? renderAdminFooter(c) : renderFooter(c, id))
           .replace(/<html([^>]*)\slang="[^"]*"/, `<html$1 lang="${esc(c.site.lang)}"`);
       },
     },

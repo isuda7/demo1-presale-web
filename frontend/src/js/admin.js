@@ -68,18 +68,22 @@ function renderRow(item) {
 
   const statusCell = document.createElement('td');
   const select = document.createElement('select');
+  select.className = 'status-select';
+  select.dataset.status = item.status;
   select.setAttribute('aria-label', `${item.id}번 상태`);
   for (const s of statuses) select.append(new Option(s.label, s.value, false, s.value === item.status));
   select.addEventListener('change', async () => {
     const res = await api(`/admin/applications/${item.id}`, { method: 'PATCH', body: { status: select.value } });
     if (res.status === 401) return showLogin();
-    if (!res.ok) alert('상태를 변경하지 못했습니다.');
+    if (!res.ok) return alert('상태를 변경하지 못했습니다.');
+    select.dataset.status = select.value;
   });
   statusCell.append(select);
 
   const actionCell = document.createElement('td');
   const del = document.createElement('button');
   del.type = 'button';
+  del.className = 'btn btn--danger';
   del.textContent = '삭제';
   del.addEventListener('click', async () => {
     if (!confirm(`${item.id}번 신청을 삭제할까요? 삭제하면 되돌릴 수 없습니다.`)) return;
@@ -118,11 +122,14 @@ async function loadList() {
     return;
   }
   const { items, total, pageSize } = res.data;
-  summary.textContent = `총 ${total}건`;
+  const count = document.createElement('strong');
+  count.textContent = total.toLocaleString('ko-KR');
+  summary.replaceChildren('총 ', count, '건');
   tbody.replaceChildren(...items.map(renderRow));
   if (!items.length) {
     const tr = document.createElement('tr');
     const cell = td('신청 내역이 없습니다.');
+    cell.className = 'is-empty';
     cell.colSpan = 7;
     tr.append(cell);
     tbody.append(tr);
