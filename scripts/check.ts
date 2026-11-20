@@ -9,7 +9,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { allPages, config } from '../shared/config/index.js';
+import { allPages, config, navPageIds } from '../shared/config/index.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors: string[] = [];
@@ -18,7 +18,7 @@ const rel = (p: string) => relative(root, p);
 
 // 1. 설정 ----------------------------------------------------------------
 for (const [label, ids] of [
-  ['nav', config.nav],
+  ['nav', navPageIds()],
   ['footerLinks', config.footerLinks],
 ] as const) {
   for (const id of ids) {

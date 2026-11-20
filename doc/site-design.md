@@ -1,6 +1,6 @@
-# 사이트 설계 — 구축 초안
+# 사이트 설계
 
-> 상태: **구축 초안** — 레이아웃·페이지 형식·필수 화면만 있는 상태. 콘텐츠·디자인·유형(템플릿)은 적용하지 않았다.
+> 상태: **콘텐츠·디자인 1차 반영** — 참고 카탈로그(e-book) 24장 전체를 열람해 페이지 구성·문구·이미지·톤을 반영했다. 유형(템플릿)은 적용하지 않았다.
 > 표기: **미확인** = 확인하지 못해 비워 둔 것 / **미확정** = 결정이 필요해 빈칸·초안으로 둔 것
 
 ## 1. 환경
@@ -52,31 +52,63 @@ shared/config/base.ts  ──▶  shared/presets/<유형>.ts  ──▶  shared/
 
 ## 4. 페이지
 
-참고 카탈로그: `https://vertium.hobanapt.co.kr/hobansummit-cjdn/final/e_book/`
-카탈로그 목차(1쪽)에서 확인한 항목: INTRO, LOCATION, DESIGN, LANDSCAPE, COMMUNITY, PLOT PLAN, UNIT PLAN, INFORMATION, BRAND PR, CHECK LIST
+참고 카탈로그: `https://vertium.hobanapt.co.kr/hobansummit-cjdn/final/e_book/` — 이미지 24장(표지, 1~11쪽 좌·우, 뒤표지)
 
-| 페이지 ID | 경로 | 이름 | base | site.ts | 카탈로그 목차 |
-| --- | --- | --- | --- | --- | --- |
-| home | `/` | 메인 | 켜짐 | — | INTRO |
-| overview | `/overview/` | 사업개요 | 켜짐 | (메뉴 제외) | 없음 — 기본 페이지로 유지 |
-| location | `/location/` | 입지환경 | 켜짐 | 메뉴 | LOCATION |
-| design | `/design/` | 단지설계 | 꺼짐 | 켬 | DESIGN |
-| landscape | `/landscape/` | 조경 | 꺼짐 | 켬 | LANDSCAPE |
-| community | `/community/` | 커뮤니티 | 꺼짐 | 켬 | COMMUNITY |
-| plot-plan | `/plot-plan/` | 단지배치 | 켜짐 | 메뉴 | PLOT PLAN |
-| unit-plan | `/unit-plan/` | 세대안내 | 켜짐 | 메뉴 | UNIT PLAN |
-| information | `/information/` | 분양안내 | 켜짐 | 메뉴 | INFORMATION |
-| brand | `/brand/` | 브랜드 | 꺼짐 | 켬 | BRAND PR |
-| checklist | `/checklist/` | 체크리스트 | 꺼짐 | 켬 | CHECK LIST |
-| apply | `/apply/` | 관심고객등록 | 켜짐 (시스템) | 메뉴 | — |
-| privacy | `/privacy/` | 개인정보처리방침 | 켜짐 (시스템) | 푸터 | — |
-| admin | `/admin/` | 관리자 | 켜짐 (시스템, noindex) | — | — |
+### 카탈로그 쪽 ↔ 사이트 페이지
 
-- 한글 페이지 이름은 목차의 영문 항목을 옮긴 **가칭**이다. 각 목차 항목이 카탈로그의 어느 쪽에 대응하는지, 하위 구성(탭·세부 페이지)이 있는지는 **미확인**.
-- overview(사업개요)를 메뉴에 넣을지, INFORMATION 에 합칠지는 **미확정**.
-- 메뉴는 1단(평면) 구조. 대메뉴·하위메뉴 그룹 구성은 **미확정**.
-- 콘텐츠 자리: 각 페이지의 `data-slot` 영역은 비어 있으며 화면에 회색 점선 박스로 표시된다.
+| 카탈로그 쪽 (파일) | 내용 | 사이트 페이지 |
+| --- | --- | --- |
+| 표지 (page0_2) | HOBAN SUMMIT BROOKSIDE 로고 | 브랜드 |
+| 1쪽 좌 (page1_1) | 목차 | 메뉴 구성 근거 |
+| 1쪽 우 (page1_2) | "하나만 선택해야 한다면," 단지 모형 | 미반영 (광고 카피 쪽) |
+| 2쪽 (page2_1·2_2) | 청주에 새로운 기준을 짓다 / 견본주택 사진 | 메인, 브랜드 |
+| 3쪽 (page3_1·3_2) | 청주 첫 번째 호반써밋 / 사업개요 / 외관 투시도 | 메인, 사업개요 |
+| 4쪽 (page4_1·4_2) | 기대되는 이름·가치 / 5대 환경 / 입지 지도 | 입지환경 |
+| 5쪽 (page5_1·5_2) | 호반써밋의 품격 대단지의 여유 / 설계 특화 5가지 | 단지설계 |
+| 6쪽 (page6_1·6_2) | 테마조경 / HEALING 6가지 | 조경 |
+| 7쪽 (page7_1·7_2) | 커뮤니티 시설 9종 / 시설 배치 투시도 | 커뮤니티 |
+| 8쪽 (page8_1·8_2) | 동·호수 배치도 / 동·호수 배치표 | 단지배치 |
+| 9~10쪽 (page9_1~10_2) | UNIT PLAN 74㎡A·74㎡B·84㎡ 면적·평면·유상옵션 | 세대안내 |
+| 11쪽 (page11_1·11_2) | 분양안내(공급대상·금액·일정·계좌·구비서류·발코니·옵션) | 분양안내 (일부, 아래 참고) |
+| 뒤표지 (end_1) | HOBAN / 청주 동남지구 B8블록 / 홈페이지 주소 | 미반영 |
+
+### 페이지·메뉴
+
+| 메뉴 그룹 | 페이지 ID | 경로 | 이름 | 비고 |
+| --- | --- | --- | --- | --- |
+| — | home | `/` | 메인 | INTRO |
+| 사업안내 | overview | `/overview/` | 사업개요 | |
+| 사업안내 | brand | `/brand/` | 브랜드 | 목차 BRAND PR. 독립 쪽이 없어 2쪽 견본주택 내용 배치 |
+| 사업안내 | location | `/location/` | 입지환경 | |
+| 단지안내 | design | `/design/` | 단지설계 | |
+| 단지안내 | landscape | `/landscape/` | 조경 | |
+| 단지안내 | community | `/community/` | 커뮤니티 | |
+| 단지안내 | plot-plan | `/plot-plan/` | 단지배치 | |
+| — | unit-plan | `/unit-plan/` | 세대안내 | 주택형 3개는 한 페이지 안 앵커 이동 |
+| — | information | `/information/` | 분양안내 | |
+| — | apply | `/apply/` | 관심고객등록 | 시스템 |
+| (푸터) | privacy | `/privacy/` | 개인정보처리방침 | 시스템, 본문 미확정 |
+| — | admin | `/admin/` | 관리자 | 시스템, noindex |
+| (꺼짐) | checklist | `/checklist/` | 체크리스트 | 목차 CHECK LIST. e-book 본문에 해당 쪽 없음 → 비활성 |
+
+- 메뉴는 그룹(대메뉴 → 하위) 구조를 지원한다: `nav` 항목에 `{ title, children: [...] }`. 그룹 이름(사업안내·단지안내)과 묶음은 **임의 구성**이다.
+- 페이지 제목 영역의 영문 표기(eyebrow)·배경 이미지는 `site.ts` 의 `pages.<id>.eyebrow / heroImage`.
 - 새 페이지 추가: `base.ts`(또는 `site.ts`) `pages` 에 정의 → `npm run pages:scaffold` → `nav` 에 추가.
+
+### 콘텐츠 반영 원칙
+- 문구·수치는 카탈로그 원문 그대로 옮겼다. 면적·세대수·금액은 행·열 합계로 검산했다(공급면적 = 전용+공용, 계약면적 = 공급+기타공용, 분양대금 = 대지비+건축비, 특별공급 합계 등).
+- 동별 최고층·호수 배치는 표로 옮기지 않고 카탈로그 배치표 이미지를 그대로 사용했다(옮겨 적을 때 오독 위험).
+- 카탈로그에 없는 문구(임의 작성 UI 문구): 메인 "CONTENTS", 바로가기 카드, 하단 "호반써밋의 소식을 가장 먼저 받아보세요.", 관심고객등록 안내문, 커뮤니티 그룹명(운동·건강 / 문화·교육·생활), 분양안내 상단 경고문, "MODEL HOUSE / 호반써밋 견본주택" 제목. 확정 카피로 교체 필요.
+
+### 이미지
+- `frontend/public/images/catalog/` — 카탈로그 쪽 이미지(896×1205)를 잘라 만든 24개 파일, 약 3.3MB.
+- 해상도가 낮다(가로 최대 896px). 원본 고해상도 이미지로 교체해야 한다.
+- 일부 이미지에는 카탈로그 원래 글자가 박혀 있다(입지 지도, 평면도 옵션 표기, 배치도 범례 등).
+
+### 디자인
+- `frontend/src/styles/tokens.css`(기본 토큰) → `theme.css`(현장 톤) → `base.css`(컴포넌트) 순서. 설정과 같은 기본 → 현장 덮어쓰기 구조.
+- 톤: 테라코타 포인트(#c66b5b), 차콜(#4d4848), 연회색 바탕(#f1eff2), 주택형 색(74A 녹색·74B 청회색·84 테라코타), 제목 명조(Noto Serif KR)·본문 고딕(Noto Sans KR, Google Fonts).
+- 색상 값은 카탈로그 화면을 보고 맞춘 **근사치**이며 브랜드 가이드 값은 **미확인**.
 
 ## 5. 신청·관리자
 
@@ -174,10 +206,17 @@ npm run dev                  # http://localhost:5173  (API 8787)
 | 미확정 | 개인정보 수집·이용 동의문 | `shared/site.ts` `privacy.consentText` (화면에 "[미확정]" 표시 중) |
 | 미확정 | 개인정보 보유·이용 기간 문구 | `shared/site.ts` `privacy.retentionText` |
 | 미확정 | 개인정보처리방침 본문 | `frontend/privacy/index.html` |
-| 미확정 | 현장명·사이트 설명·푸터 사업자 정보 | `shared/site.ts` `site`, `footer.lines` |
+| 미확정 | 사이트명 — 카탈로그 표기 "HOBAN SUMMIT BROOKSIDE" 를 그대로 사용. 한글 단지명(BROOKSIDE 한글 표기)은 카탈로그에 없음 | `shared/site.ts` `site.name` |
+| 미확정 | 푸터 시행·시공사·사업자 정보 (카탈로그에 없음. 현재 사업명·대지위치만) | `footer.lines` |
 | 미확정 | 신청 처리 상태 구분 (현재 초안: 접수/처리완료) | `admin.statuses` |
-| 미확정 | 메뉴 그룹 구성, 사업개요 페이지 노출 여부 | `nav`, `pages.overview` |
-| 미확인 | 카탈로그 목차 항목별 대응 쪽수·세부 구성 | — |
-| 미확인 | 카탈로그 1쪽의 "청주 동남지구 B8블록", 표지의 브랜드 표기가 사이트명으로 확정된 것인지 | — |
+| 미확정 | 메뉴 그룹명·묶음 (사업안내/단지안내는 임의) | `nav` |
+| 미확정 | 임의 작성 UI 문구 (4. 콘텐츠 반영 원칙 참고) | 각 페이지 HTML |
+| 미반영 | 분양대금·발코니·옵션 **납부계좌**(은행·계좌번호·예금주) — 결제 정보는 카탈로그를 옮겨 적지 않고 확정 모집공고 기준으로 따로 입력해야 함 | `information` |
+| 미반영 | 구비서류 표, 플러스 옵션 납부일정, 회차별 납부 금액, 청약 관련 세부 유의사항(※) | `information` |
+| 미반영 | 1쪽 우 광고 카피("하나만 선택해야 한다면,"), 뒤표지 홈페이지 주소 | — |
+| 미확인 | 분양안내 내용의 현재 유효성 — 카탈로그 기준은 2021년 분양(청약 2021.03, 입주 2023.07 예정). 화면에 "2021년 분양 당시 기준" 안내를 넣음 | `information` |
+| 미확인 | 카탈로그 이미지·로고의 사용 권한 | `frontend/public/images/catalog/` |
+| 미확인 | 목차의 CHECK LIST 내용 (e-book 에 해당 쪽 없음) | `pages.checklist` (비활성) |
+| 미확인 | 목차의 BRAND PR 에 해당하는 원래 쪽 (2쪽을 대신 배치) | `brand` |
 | 미확인 | Vercel 실제 배포 동작(rewrites 경로 전달, libsql 함수 번들) — 로컬에서만 검증 | — |
 | 미확인 | Turso 원격 접속 — 로컬은 파일 DB 로만 검증 | — |

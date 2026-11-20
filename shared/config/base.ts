@@ -41,6 +41,7 @@ export const baseConfig: SiteConfig = {
   footerLinks: ['privacy'],
   footer: {
     lines: [],
+    notices: [],
   },
   apply: {
     open: true,

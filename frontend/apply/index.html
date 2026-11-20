@@ -10,19 +10,28 @@
     <!-- @layout:header -->
     <main id="main" class="page page--apply">
       <!-- @layout:title -->
-      <section class="page-section" data-slot="apply-intro"></section>
 
-      <section class="page-section">
-        <!-- 마감 시 안내 -->
-        <p id="apply-closed" class="form-message" role="status" hidden></p>
-        <!-- 접수 완료/오류 안내 -->
-        <p id="apply-result" class="form-message" role="status" hidden></p>
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">REGISTER</p>
+            <h2 class="section-title">관심고객 <em>등록</em></h2>
+            <p class="lead">성함과 연락처를 남겨 주시면 분양 소식을 안내해 드립니다.</p>
+          </div>
 
-        <form id="apply-form" novalidate hidden>
-          <div id="apply-fields"></div>
-          <button type="submit">등록하기</button>
-        </form>
-        <noscript>관심고객 등록은 자바스크립트를 사용해야 합니다.</noscript>
+          <div class="form-panel">
+            <!-- 마감 시 안내 -->
+            <p id="apply-closed" class="form-message" role="status" hidden></p>
+            <!-- 접수 완료/오류 안내 -->
+            <p id="apply-result" class="form-message" role="status" hidden></p>
+
+            <form id="apply-form" novalidate hidden>
+              <div id="apply-fields"></div>
+              <button type="submit">등록하기</button>
+            </form>
+            <noscript>관심고객 등록은 자바스크립트를 사용해야 합니다.</noscript>
+          </div>
+        </div>
       </section>
     </main>
     <!-- @layout:footer -->

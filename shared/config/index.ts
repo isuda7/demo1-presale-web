@@ -4,7 +4,12 @@ import { presets } from '../presets/index.js';
 import { siteOverride } from '../site.js';
 import type { PageDef, SiteConfig } from './schema.js';
 
-export type { PageDef, SiteConfig, StatusDef, ConfigOverride } from './schema.js';
+export type { PageDef, SiteConfig, StatusDef, ConfigOverride, NavItem } from './schema.js';
+
+/** 메뉴에 들어 있는 모든 페이지 ID (그룹 하위 포함) */
+export function navPageIds(c: SiteConfig = config): string[] {
+  return c.nav.flatMap((item) => (typeof item === 'string' ? [item] : item.children));
+}
 
 /** 기본 → 유형 → 현장 설정 순으로 병합한 최종 설정 */
 export function resolveConfig(): SiteConfig {

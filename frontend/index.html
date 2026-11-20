@@ -6,14 +6,75 @@
     <!-- @layout:head -->
     <link rel="stylesheet" href="/src/styles/base.css" />
   </head>
-  <body>
+  <body class="is-home">
     <!-- @layout:header -->
     <main id="main" class="page page--home">
-      <!-- 메인(INTRO) -->
-      <section class="page-section" data-slot="hero"></section>
-      <section class="page-section" data-slot="summary"></section>
-      <section class="page-section">
-        <a href="/apply/">관심고객등록</a>
+      <!-- 카탈로그 3쪽 -->
+      <section class="home-hero" style="background-image: url('/images/catalog/hero-exterior.jpg')">
+        <div class="home-hero__inner">
+          <p class="eyebrow">HOBAN SUMMIT BROOKSIDE</p>
+          <h1 class="home-hero__title">
+            청주 첫 번째 <em>호반써밋,</em><br />
+            최고의 <em>프리미엄 라이프</em>로 탄생합니다.
+          </h1>
+          <div class="home-hero__actions">
+            <a class="btn btn--primary" href="/apply/">관심고객등록</a>
+            <a class="btn btn--ghost" href="/unit-plan/">세대안내 보기</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 카탈로그 3쪽 사업개요 요약 -->
+      <section class="section">
+        <div class="container">
+          <div class="stat-row">
+            <div class="stat"><span class="stat__label">건축규모</span><strong class="stat__value">지하 2층 ~ 지상 25층</strong></div>
+            <div class="stat"><span class="stat__label">공급규모</span><strong class="stat__value">14개동 1,215세대</strong></div>
+            <div class="stat"><span class="stat__label">주택형</span><strong class="stat__value">74㎡A · 74㎡B · 84㎡</strong></div>
+            <div class="stat"><span class="stat__label">대지위치</span><strong class="stat__value">청주 동남택지개발지구 B-8BL</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 카탈로그 2쪽 -->
+      <section class="section section--dark">
+        <div class="container split">
+          <div class="split__text">
+            <p class="eyebrow">LANDMARK PREMIUM</p>
+            <h2 class="section-title">청주에 <em>새로운 기준</em>을 짓다</h2>
+            <p class="lead">청주 동남지구의 가치와 호반써밋의<br />품격으로 삶의 자부심이 높아집니다.</p>
+            <a class="text-link" href="/brand/">브랜드 보기</a>
+          </div>
+          <figure class="split__media">
+            <img src="/images/catalog/brand-lounge.jpg" alt="호반써밋 견본주택 라운지" loading="lazy" />
+            <figcaption>※ 상기 이미지는 실제 호반써밋 견본주택을 촬영한 이미지입니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 바로가기 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">CONTENTS</p>
+            <h2 class="section-title">호반써밋을 <em>한눈에</em></h2>
+          </div>
+          <ul class="card-grid">
+            <li><a class="card" href="/location/"><img src="/images/catalog/location-map.jpg" alt="" loading="lazy" /><span class="card__eyebrow">LOCATION</span><strong>입지환경</strong></a></li>
+            <li><a class="card" href="/design/"><img src="/images/catalog/design-aerial.jpg" alt="" loading="lazy" /><span class="card__eyebrow">DESIGN</span><strong>단지설계</strong></a></li>
+            <li><a class="card" href="/landscape/"><img src="/images/catalog/landscape-main.jpg" alt="" loading="lazy" /><span class="card__eyebrow">LANDSCAPE</span><strong>조경</strong></a></li>
+            <li><a class="card" href="/community/"><img src="/images/catalog/community-floor.jpg" alt="" loading="lazy" /><span class="card__eyebrow">COMMUNITY</span><strong>커뮤니티</strong></a></li>
+            <li><a class="card" href="/plot-plan/"><img src="/images/catalog/plot-plan.jpg" alt="" loading="lazy" /><span class="card__eyebrow">PLOT PLAN</span><strong>단지배치</strong></a></li>
+            <li><a class="card" href="/unit-plan/"><img src="/images/catalog/unit-84.jpg" alt="" loading="lazy" /><span class="card__eyebrow">UNIT PLAN</span><strong>세대안내</strong></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="container cta-band__inner">
+          <p class="cta-band__text">호반써밋의 소식을 가장 먼저 받아보세요.</p>
+          <a class="btn btn--light" href="/apply/">관심고객등록</a>
+        </div>
       </section>
     </main>
     <!-- @layout:footer -->

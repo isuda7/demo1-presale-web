@@ -10,7 +10,38 @@
     <!-- @layout:header -->
     <main id="main" class="page page--brand">
       <!-- @layout:title -->
-      <section class="page-section" data-slot="content"></section>
+
+      <!-- 카탈로그 표지·2쪽 (목차의 BRAND PR 은 독립 쪽이 없어 2쪽 견본주택 내용을 배치) -->
+      <section class="section">
+        <div class="container split">
+          <div class="split__text">
+            <p class="eyebrow">LANDMARK PREMIUM</p>
+            <h2 class="section-title">청주에 <em>새로운 기준</em>을 짓다</h2>
+            <p class="lead">청주 동남지구의 가치와 호반써밋의<br />품격으로 삶의 자부심이 높아집니다.</p>
+            <p class="lead lead--sub">청주 최고의 프리미엄 라이프, 호반써밋</p>
+          </div>
+          <figure class="split__media">
+            <img src="/images/catalog/brand-cover.jpg" alt="HOBAN SUMMIT BROOKSIDE 브랜드 이미지" loading="lazy" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="section section--dark">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">MODEL HOUSE</p>
+            <h2 class="section-title">호반써밋 견본주택</h2>
+          </div>
+          <div class="gallery gallery--brand">
+            <figure class="gallery__wide"><img src="/images/catalog/brand-lounge.jpg" alt="견본주택 라운지" loading="lazy" /></figure>
+            <figure><img src="/images/catalog/brand-interior.jpg" alt="견본주택 내부" loading="lazy" /></figure>
+            <figure><img src="/images/catalog/brand-reception.jpg" alt="견본주택 안내데스크" loading="lazy" /></figure>
+            <figure><img src="/images/catalog/brand-landmark.jpg" alt="LANDMARK PREMIUM 전시 공간" loading="lazy" /></figure>
+            <figure><img src="/images/catalog/brand-model.jpg" alt="단지 모형" loading="lazy" /></figure>
+          </div>
+          <p class="note">※ 상기 이미지는 실제 호반써밋 견본주택을 촬영한 이미지입니다.</p>
+        </div>
+      </section>
     </main>
     <!-- @layout:footer -->
     <script type="module" src="/src/js/common.js"></script>

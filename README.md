@@ -1,4 +1,4 @@
-# 분양 사이트 — 구축 초안
+# 분양 사이트 — HOBAN SUMMIT BROOKSIDE
 
 Vite 멀티페이지(HTML/CSS/JS) + Hono API + Turso(로컬은 `local.db`), Vercel 배포.
 

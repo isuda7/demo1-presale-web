@@ -1,0 +1,18 @@
+/*
+ * 현장 테마 — 참고 카탈로그의 톤(테라코타 포인트, 차콜, 연회색 바탕, 명조 제목)
+ * 색상 값은 카탈로그 화면을 보고 맞춘 근사치이며, 브랜드 가이드 값은 미확인.
+ */
+:root {
+  --color-text: #3a3534;
+  --color-muted: #7d7574;
+  --color-line: #e3dfe0;
+  --color-tint: #f1eff2;
+  --color-accent: #c66b5b;
+  --color-accent-contrast: #ffffff;
+  --color-dark: #4d4848;
+  --color-dark-text: #f3eeec;
+
+  --color-type-74a: #9cc27a;
+  --color-type-74b: #7d8ba3;
+  --color-type-84: #c66b5b;
+}

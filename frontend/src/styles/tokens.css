@@ -1,0 +1,24 @@
+/* 기본(base) 디자인 토큰 — 현장 톤은 theme.css 에서 덮어쓴다 */
+:root {
+  --content-width: 1200px;
+  --gutter: 20px;
+  --header-height: 72px;
+
+  --font-sans: 'Noto Sans KR', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-serif: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+
+  --color-text: #2b2b2b;
+  --color-muted: #77706f;
+  --color-line: #ddd8d8;
+  --color-bg: #ffffff;
+  --color-tint: #f4f3f4;
+  --color-accent: #333333;
+  --color-accent-contrast: #ffffff;
+  --color-dark: #333333;
+  --color-dark-text: #f2f0ef;
+  --color-error: #c0392b;
+
+  --color-type-74a: #888;
+  --color-type-74b: #666;
+  --color-type-84: #444;
+}

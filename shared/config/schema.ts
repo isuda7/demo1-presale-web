@@ -16,7 +16,14 @@ export interface PageDef {
   layout?: 'default' | 'admin';
   /** 검색엔진 비노출 */
   noindex?: boolean;
+  /** 제목 위 보조 표기 (예: LOCATION) */
+  eyebrow?: string;
+  /** 제목 영역 배경 이미지 경로 (public 기준, 예: /images/a.jpg) */
+  heroImage?: string;
 }
+
+/** 메뉴 항목: 페이지 ID, 또는 하위 페이지를 묶은 그룹 */
+export type NavItem = string | { title: string; children: string[] };
 
 export interface StatusDef {
   value: string;
@@ -36,12 +43,14 @@ export interface SiteConfig {
   /** 페이지 목록. key = 페이지 ID (HTML 의 data-page 값) */
   pages: Record<string, PageDef>;
   /** 헤더 메뉴 순서 (페이지 ID 배열) */
-  nav: string[];
+  nav: NavItem[];
   /** 푸터 링크 (페이지 ID 배열) */
   footerLinks: string[];
   footer: {
     /** 사업자 정보 등 푸터 문구 줄 단위. 비어 있으면 출력하지 않음 */
     lines: string[];
+    /** 하단 고지 문구(※ 안내). 비어 있으면 출력하지 않음 */
+    notices: string[];
   };
   apply: {
     /** 신청 접수 스위치. false 면 화면은 안내만, 서버도 접수 거부 */
