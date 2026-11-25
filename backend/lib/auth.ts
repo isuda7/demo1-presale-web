@@ -63,6 +63,11 @@ export function setAdminCookie(c: Context, token: string, hours: number): void {
     path: COOKIE_PATH,
     maxAge: hours * 3600,
   });
+  setAdminHintCookie(c, hours);
+}
+
+/** 사이트 화면에서 편집기를 불러오라는 표시 쿠키 (권한 아님) */
+export function setAdminHintCookie(c: Context, hours: number): void {
   setCookie(c, ADMIN_HINT_COOKIE, '1', {
     secure: isHttps(c),
     sameSite: 'Strict',

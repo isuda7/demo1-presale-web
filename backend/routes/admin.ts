@@ -19,6 +19,7 @@ import {
   recordLoginFailure,
   requireAdmin,
   setAdminCookie,
+  setAdminHintCookie,
 } from '../lib/auth.js';
 import { toCsv } from '../lib/csv.js';
 
@@ -84,9 +85,11 @@ adminRoutes.use('/applications', requireAdmin);
 adminRoutes.use('/applications/*', requireAdmin);
 adminRoutes.use('/applications.csv', requireAdmin);
 
-adminRoutes.get('/me', (c) =>
-  c.json({ ok: true, statuses: config.admin.statuses, pageSize: config.admin.pageSize }),
-);
+adminRoutes.get('/me', (c) => {
+  // 화면 편집 기능 추가 전에 로그인해 표시 쿠키가 없는 세션도 편집 바가 뜨도록 다시 발급
+  setAdminHintCookie(c, config.admin.sessionHours);
+  return c.json({ ok: true, statuses: config.admin.statuses, pageSize: config.admin.pageSize });
+});
 
 adminRoutes.get('/applications', async (c) => {
   const page = Math.max(1, Number.parseInt(c.req.query('page') ?? '1', 10) || 1);

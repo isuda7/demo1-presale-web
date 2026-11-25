@@ -13,3 +13,6 @@ local.db-*
 *.db-journal
 
 .DS_Store
+
+# 스킬 패키징 결과물
+dist-skill/

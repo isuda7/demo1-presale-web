@@ -342,6 +342,22 @@ function discard() {
   location.reload();
 }
 
+/**
+ * 다른 탭(관리자 화면 등)에서 로그아웃해 표시 쿠키가 사라졌으면 편집 바를 내림.
+ * 로그아웃 알림(BroadcastChannel), 탭 전환·포커스, 1.5초 주기 쿠키 확인으로 감지한다.
+ */
+const logoutChannel = 'BroadcastChannel' in window ? new BroadcastChannel('admin-session') : null;
+let cookieTimer = null;
+
+function onVisibility() {
+  if (!bar) return;
+  if (!/(?:^|;\s*)admin_ui=1(?:;|$)/.test(document.cookie)) {
+    dirty.clear();
+    teardown();
+    toast('로그아웃되어 편집 모드를 종료했습니다.');
+  }
+}
+
 function teardown() {
   setEditing(false);
   bar?.remove();
@@ -352,6 +368,10 @@ function teardown() {
   document.removeEventListener('keydown', onKeydown, true);
   document.removeEventListener('paste', onPaste, true);
   window.removeEventListener('beforeunload', onBeforeUnload);
+  document.removeEventListener('visibilitychange', onVisibility);
+  window.removeEventListener('focus', onVisibility);
+  clearInterval(cookieTimer);
+  if (logoutChannel) logoutChannel.onmessage = null;
 }
 
 function expired() {
@@ -365,6 +385,7 @@ async function logout() {
   dirty.clear();
   await apiFetch('/admin/logout', { method: 'POST' });
   document.cookie = HINT_COOKIE_CLEAR;
+  logoutChannel?.postMessage('logout');
   teardown();
   location.reload(); // 편집 중이던 화면 상태를 지우고 방문자 화면으로
 }
@@ -386,9 +407,20 @@ export async function startEditor(s) {
     return;
   }
   buildBar();
+  // 관리자 화면의 '화면 편집'으로 들어오면 편집 모드를 바로 켬 (주소의 ?cms=edit 은 지움)
+  const url = new URL(location.href);
+  if (url.searchParams.get('cms') === 'edit') {
+    url.searchParams.delete('cms');
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+    setEditing(true);
+  }
   document.addEventListener('click', onClick, true);
   document.addEventListener('input', onInput, true);
   document.addEventListener('keydown', onKeydown, true);
   document.addEventListener('paste', onPaste, true);
   window.addEventListener('beforeunload', onBeforeUnload);
+  document.addEventListener('visibilitychange', onVisibility);
+  window.addEventListener('focus', onVisibility);
+  cookieTimer = setInterval(onVisibility, 1500);
+  if (logoutChannel) logoutChannel.onmessage = (e) => e.data === 'logout' && onVisibility();
 }

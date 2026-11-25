@@ -13,6 +13,8 @@ const summary = document.getElementById('list-summary');
 const pager = document.getElementById('list-pager');
 const csvLink = document.getElementById('csv-link');
 const logoutBtn = document.getElementById('logout-btn');
+// 관리자 헤더의 '화면 편집' 버튼 — 로그인 상태에서만 보임
+const editLink = document.querySelector('.admin-header__edit');
 
 let statuses = [];
 let page = 1;
@@ -44,11 +46,13 @@ function filterQuery(withPage) {
 function showLogin() {
   listView.hidden = true;
   loginView.hidden = false;
+  if (editLink) editLink.hidden = true;
 }
 
 async function showList() {
   loginView.hidden = true;
   listView.hidden = false;
+  if (editLink) editLink.hidden = false;
   await loadList();
 }
 
@@ -166,6 +170,8 @@ filterForm.addEventListener('reset', () => {
 
 logoutBtn.addEventListener('click', async () => {
   await api('/admin/logout', { method: 'POST' });
+  // 열려 있는 사이트 탭의 편집 바도 내리도록 알림
+  if ('BroadcastChannel' in window) new BroadcastChannel('admin-session').postMessage('logout');
   showLogin();
 });
 

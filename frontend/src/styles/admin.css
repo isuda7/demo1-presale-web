@@ -286,3 +286,19 @@
     padding: 32px 24px;
   }
 }
+.admin-header__edit {
+  margin-left: auto;
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+.admin-header__edit:hover {
+  filter: brightness(0.95);
+}
+.admin-header__edit:not([hidden]) + .admin-header__site {
+  margin-left: 4px;
+}

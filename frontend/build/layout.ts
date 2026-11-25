@@ -124,6 +124,7 @@ function renderAdminHeader(c: SiteConfig): string {
     <div class="admin-header__inner">
       <a class="site-logo" href="/admin/" aria-label="${esc(c.site.name)} 관리자">${renderLogo(c)}</a>
       <span class="admin-header__label">ADMIN</span>
+      <a class="admin-header__edit" href="/?cms=edit" hidden>화면 편집</a>
       <a class="admin-header__site" href="/" target="_blank" rel="noopener">사이트 보기</a>
     </div>
   </header>`;
